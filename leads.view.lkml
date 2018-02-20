@@ -110,4 +110,8 @@ view: leads {
     type: count
     drill_fields: [id, last_name, first_name, lead_activities.count, lead_activities_view.count]
   }
+  measure: distinct_emails {
+    type: count_distinct
+    sql: ${TABLE}.email ;;
+  }
 }
