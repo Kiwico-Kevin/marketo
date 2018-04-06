@@ -51,6 +51,49 @@ view: lead_activities {
     sql: ${TABLE}.primary_attribute_value ;;
   }
 
+  dimension: activity_type {
+    sql:
+      CASE
+        WHEN ${activity_type_id} = '12' THEN '7. New Lead'
+        WHEN ${activity_type_id} = '10' THEN '4. Open Email'
+        WHEN ${activity_type_id} = '8' THEN '3. Email Bounced'
+        WHEN ${activity_type_id} = '9' THEN '6. Unsubscribe Email'
+        WHEN ${activity_type_id} = '6' THEN '1. Send Email'
+        WHEN ${activity_type_id} = '7' THEN '2. Email Delivered'
+        WHEN ${activity_type_id} = '11' THEN '5. Click Email'
+        ELSE 'Other'
+    END;;
+  }
+
+  dimension: primary_attribute_store {
+    sql:
+      CASE
+        WHEN ${primary_attribute_value} LIKE '%cricket%' THEN 'Cricket'
+        WHEN ${primary_attribute_value} LIKE '%koala%' THEN 'Koala'
+        WHEN ${primary_attribute_value} LIKE '%kiwi%' THEN 'Kiwi'
+        WHEN ${primary_attribute_value} LIKE '%doodle%' THEN 'Doodle'
+        WHEN ${primary_attribute_value} LIKE '%tinker%' THEN 'Tinker'
+        ELSE 'Other'
+    END;;
+  }
+
+  dimension: primary_attribute_type {
+    sql:
+      CASE
+        WHEN ${primary_attribute_value} LIKE 'Survey Email.%' THEN 'Crate Survey'
+        WHEN ${primary_attribute_value} LIKE '%Weekend Activities%' OR ${primary_attribute_value} LIKE '%Midweek Activities%' THEN 'DIY Email'
+        WHEN ${primary_attribute_value} LIKE '%Welcome%' AND ${primary_attribute_value} LIKE '%40%' THEN 'Welcome Series - 40%'
+        WHEN ${primary_attribute_value} LIKE '%Welcome%' AND ${primary_attribute_value} LIKE '%50%' THEN 'Welcome Series - 50%'
+        WHEN ${primary_attribute_value} LIKE '%Welcome%' AND ${primary_attribute_value} LIKE '%60%' THEN 'Welcome Series - 60%'
+        WHEN ${primary_attribute_value} LIKE '%Welcome%' AND ${primary_attribute_value} LIKE '%free trial%' THEN 'Welcome Series - free trial'
+        WHEN ${primary_attribute_value} LIKE '%Welcome%' THEN 'Welcome Series - 30%'
+        WHEN ${primary_attribute_value} LIKE 'Abandoned Cart.%' THEN 'Abandoned Cart'
+        WHEN ${primary_attribute_value} LIKE 'Renew Subscription Emails.%' THEN 'Renew Email'
+        WHEN ${primary_attribute_value} LIKE 'Sneak Peek Emails.%' THEN 'Sneak Peek'
+        ELSE 'Other'
+    END;;
+  }
+
   dimension: primary_attribute_value_id {
     type: string
     sql: ${TABLE}.primary_attribute_value_id ;;

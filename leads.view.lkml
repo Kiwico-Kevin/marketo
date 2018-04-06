@@ -112,6 +112,6 @@ view: leads {
   }
   measure: distinct_emails {
     type: count_distinct
-    sql: ${TABLE}.email ;;
+    sql: LOWER(${TABLE}.email) ;;
   }
 }
