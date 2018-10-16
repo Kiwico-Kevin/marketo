@@ -4,7 +4,7 @@ connection: "kiwi_marketo"
 include: "*.view"
 
 # include all the dashboards
-include: "*.dashboard"
+#include: "*.dashboard"
 
 datagroup: kiwi_marketo_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;

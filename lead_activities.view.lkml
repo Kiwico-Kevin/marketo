@@ -94,6 +94,17 @@ view: lead_activities {
     END;;
   }
 
+  dimension: email_series_number{
+    sql:
+      CASE
+        WHEN ${primary_attribute_value} LIKE '%.1.%' OR ${primary_attribute_value} LIKE '%EM 1%' THEN '1st Email'
+        WHEN ${primary_attribute_value} LIKE '%.2.%' OR ${primary_attribute_value} LIKE '%EM 2%' THEN '2nd Email'
+        WHEN ${primary_attribute_value} LIKE '%.3.%' OR ${primary_attribute_value} LIKE '%EM 3%' THEN '3rd Email'
+        WHEN ${primary_attribute_value} LIKE '%.4.%' OR ${primary_attribute_value} LIKE '%EM 4%' THEN '4th Email'
+        ELSE 'Other'
+    END;;
+  }
+
   dimension: primary_attribute_value_id {
     type: string
     sql: ${TABLE}.primary_attribute_value_id ;;
@@ -129,6 +140,12 @@ view: lead_activities {
 
   measure: count {
     type: count
+    drill_fields: [id, leads.last_name, leads.id, leads.first_name]
+  }
+
+  measure: distinct_email {
+    type: count_distinct
+    sql: ${lead_id} ;;
     drill_fields: [id, leads.last_name, leads.id, leads.first_name]
   }
 }
